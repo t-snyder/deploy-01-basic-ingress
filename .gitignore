@@ -1,0 +1,15 @@
+archive/
+.metadata/
+fruit-deploy/target
+fruit-deploy/.settings
+fruit-deploy/.classpath
+fruit-deploy/.project
+papaya/target
+papaya/.settings
+papaya/.classpath
+papaya/.project
+passionfruit/target
+passionfruit/.settings
+passionfruit/.classpath
+passionfruit/.project
+

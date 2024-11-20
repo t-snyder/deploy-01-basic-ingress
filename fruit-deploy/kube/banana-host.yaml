@@ -1,0 +1,49 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: banana-host
+  labels:
+    app: banana-host
+spec:
+  containers:
+    - name: banana-host
+      image: hashicorp/http-echo
+      args:
+        - "-text=banana-host"
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: banana-host-service
+spec:
+  selector:
+    app: banana-host
+  ports:
+    - name: http
+      port: 5678 # Default port for image
+      protocol: TCP
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: banana-host-ingress
+  annotations:
+    ingress.kubernetes.io/rewrite-target: /
+    ingress.kubernetes.io/proxy-connect-timeout: 60s
+    ingress.kubernetes.io/ssl-passthrough: "true"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: "banana.foo.com" 
+    http:
+      paths:
+        - path: /banana
+          pathType: Prefix
+          backend:
+              service:
+                name: banana-host-service
+                port:
+                  name: http
+  

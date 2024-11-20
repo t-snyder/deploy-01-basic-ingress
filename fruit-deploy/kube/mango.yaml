@@ -1,0 +1,98 @@
+#
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: mango-tls-cert
+spec:
+  isCA: false
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+  dnsNames:
+    - localhost
+    - mango
+    - mango.mango.svc.cluster.local
+    - mango.foo.com
+  ipAddresses:
+    - 127.0.0.1
+  secretName: mango-tls-cert
+  issuerRef:
+    name: mango-tls-cert-issuer
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mango
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mango
+  template:
+    metadata:
+      labels:
+        app: mango
+    spec:
+      containers:
+        - name: main
+          image: hashicorp/http-echo
+          args:
+            - "-text=juicy mango"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 443
+          volumeMounts:
+            - name: tls-cert-volume
+              mountPath: /var/config/tls
+              readOnly: true
+      volumes:
+        - name: tls-cert-volume
+          secret:
+            secretName: mango-tls-cert
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mango-svc
+spec:
+  ports:
+    - name: https
+      port: 443
+      protocol: TCP
+      targetPort: 5678  
+  selector:
+    app: mango
+    
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: 60s
+    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+  labels:
+    app: mango
+  name: mango
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: mango.foo.com
+      http:
+        paths:
+          - path: /mango
+            pathType: Prefix
+            backend:
+              service:
+                name: mango-svc
+                port:
+                  name: https
+  tls:
+    - hosts:
+        - mango.foo.com
+  

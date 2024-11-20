@@ -1,0 +1,50 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: apple-host
+  labels:
+    app: apple-host
+spec:
+  containers:
+    - name: apple-host
+      image: hashicorp/http-echo
+      args:
+        - "-text=apple-host"
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: apple-host-service
+spec:
+  selector:
+    app: apple-host
+  ports:
+    - name: http
+      port: 5678 # Default port for image
+      protocol: TCP
+ 
+--- 
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: apple-host-ingress
+  annotations:
+    ingress.kubernetes.io/rewrite-target: /
+    ingress.kubernetes.io/proxy-connect-timeout: 60s
+    ingress.kubernetes.io/ssl-passthrough: "true"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: "apple.foo.com" 
+    http:
+      paths:
+        - path: /apple
+          pathType: Prefix
+          backend:
+              service:
+                name: apple-host-service
+                port:
+                  name: http
+     

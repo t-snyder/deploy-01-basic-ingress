@@ -1,0 +1,49 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: passion
+  labels:
+    app: passion
+spec:
+  containers:
+    - name: passion
+      image: library/passionfruit:1.0
+      ports:
+        - containerPort: 8080
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: passion-svc
+spec:
+  selector:
+    app: passion
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: 8080  
+ 
+--- 
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: passion-ingress
+  annotations:
+    ingress.kubernetes.io/rewrite-target: /
+    ingress.kubernetes.io/proxy-connect-timeout: 60s
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: "passion.foo.com" 
+    http:
+      paths:
+        - path: /passion
+          pathType: Prefix
+          backend:
+              service:
+                name: passion-svc
+                port:
+                  name: http
+     

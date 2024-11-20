@@ -1,0 +1,10 @@
+FROM openjdk:17-jdk-alpine
+
+RUN mkdir -p /var/app
+RUN mkdir -p /var/app/lib
+
+COPY ./lib/          /var/app/lib
+COPY ./PassionFruitServer.jar /var/app/PassionFruitServer.jar
+
+WORKDIR /var/app
+ENTRYPOINT ["java","-jar","/var/app/PassionFruitServer.jar"]

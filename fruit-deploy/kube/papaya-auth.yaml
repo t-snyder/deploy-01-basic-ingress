@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: papaya-auth
+  namespace: papaya
+type: Opaque
+data:
+  hostName: cGFwYXlhLmZvby5jb20K #papaya.foo.com
+  keyStorePwd: MTIzNDU2Nwo=      #1234567
