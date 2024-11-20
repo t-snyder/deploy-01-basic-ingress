@@ -5,9 +5,9 @@ used to manage self-signed certificates for the TLS.
 
 ## Projects Included
 The projects include the following: 
-   a) fruit-deploy - Deploys all components to a minikube environment. 
-   b) passionfruit - Deploys a simple pekko-http server with an http ingress. 
-   c) papaya       - A simple pekko-http tls server with tls termination on the ingress.
+   1. fruit-deploy - Deploys all components to a minikube environment. 
+   2. passionfruit - Deploys a simple pekko-http server with an http ingress. 
+   3. papaya       - A simple pekko-http tls server with tls termination on the ingress.
 
 ## Project Components
 The main components of the prototype project are: 
