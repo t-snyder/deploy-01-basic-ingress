@@ -1,4 +1,6 @@
-# ingress-nginx-test Project
+# Ingress-Nginx-Test Project
+Github Project: [https://github.com/t-snyder/ingress-nginx-test](https://github.com/t-snyder/ingress-nginx-test)
+
 ## Purpose
 The purpose of the prototype project is to demonstrate the configuration and use of ingress-nginx  within the minikube environment. The tests include http and https terminated at the ingress controller. Cert-manager is
 used to manage self-signed certificates for the TLS.
