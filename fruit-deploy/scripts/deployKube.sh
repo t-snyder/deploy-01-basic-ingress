@@ -16,8 +16,8 @@ minikube addons enable ingress
 minikube dashboard
 
 ####### Open a new terminal #################
-##### TODO - Change path to your deployment #####################################
-PROTODIR=/media/tim/ExtraDrive1/Projects/ingress-nginx-test/fruit-deploy/
+##### TODO - Change path to your local deployment #############################
+PROTODIR=/media/tim/ExtraDrive1/Projects/learn-01-basic-ingress/fruit-deploy/
 
 #Install cert-manager
 echo "    "
