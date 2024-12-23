@@ -1,5 +1,0 @@
-main:
-  - title: "About me"
-    url: /about/
-  - title: "Deployment Instructions"
-    url: /readme/
