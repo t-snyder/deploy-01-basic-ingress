@@ -1,4 +1,5 @@
 archive/
+docs/
 .metadata/
 fruit-deploy/target
 fruit-deploy/.settings
