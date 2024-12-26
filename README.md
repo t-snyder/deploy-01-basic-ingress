@@ -30,9 +30,9 @@ The project deployment presumes the following:
   1. Open the fruit-deploy/scripts/deployKube.sh file within a text editor. 
   2. Open a terminal to process the commands. 
   3. Modify the $PROTODIR env variable in the terminal to point to your source directory.
-  4. Run the commands within the fruit-deploy/scripts/deployKube.sh separately.
-  **Note -** 
-  *The commands within the deployKube.sh are meant to be copy pasted into a terminal and not run as a bash script.*
+  4. Run the commands within the fruit-deploy/scripts/deployKube.sh separately.<br>
+     **Note -**<br> 
+      *The commands within the deployKube.sh are meant to be copy pasted into a terminal and not run as a bash script.*
 
 ## Testing
 At the end of the deployKube.sh file there is a section for curl commands to invoke various deployed capabilities. A brief summary of the capabilites are:
