@@ -27,10 +27,12 @@ The project deployment presumes the following:
    3. Linux machine. I use Ubuntu 20.04 There are several utility commands within deployKube.sh which are linux specific. These can easily be modified or removed for your operating system environment.
 
 ## Runtime Instructions:
-  - Open the fruit-deploy/scripts/deployKube.sh file within a text editor. 
-  - Open a terminal to process the commands. 
-  - Modify the $PROTODIR env variable in the terminal to point to your source directory.
-  - Run the commands within the fruit-deploy/scripts/deployKube.sh separately.
+  1. Open the fruit-deploy/scripts/deployKube.sh file within a text editor. 
+  2. Open a terminal to process the commands. 
+  3. Modify the $PROTODIR env variable in the terminal to point to your source directory.
+  4. Run the commands within the fruit-deploy/scripts/deployKube.sh separately.
+  **Note -** 
+  *The commands within the deployKube.sh are meant to be copy pasted into a terminal and not run as a bash script.*
 
 ## Testing
 At the end of the deployKube.sh file there is a section for curl commands to invoke various deployed capabilities. A brief summary of the capabilites are:
