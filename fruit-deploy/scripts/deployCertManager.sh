@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #Deploying cert-manager components
-kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.14.5/cert-manager.yaml
+kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.15.5/cert-manager.yaml
 
 # Waiting for cert-manager components to be ready
 echo "Waiting for cert-manager components to be ready."

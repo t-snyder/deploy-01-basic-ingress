@@ -17,16 +17,15 @@ minikube dashboard
 
 ####### Open a new terminal #################
 ##### TODO - Change path to your local deployment #############################
-PROTODIR=/media/tim/ExtraDrive1/Projects/learn-01-basic-ingress/fruit-deploy/
+PROTODIR=/media/tim/ExtraDrive1/Projects/deploy-01-basic-ingress/fruit-deploy/
 
 #Install cert-manager
-echo "    "
-echo "    "
-echo "Installing cert-manager"
 /bin/bash $PROTODIR/scripts/deployCertManager.sh
 
+# Deploy namespaces used
 /bin/bash $PROTODIR/scripts/initNamespaces.sh
 
+# Root CA - self signed
 kubectl -n mango apply -f $PROTODIR/kube/root-tls-cert-issuer.yaml
 kubectl -n mango wait --timeout=30s --for=condition=Ready issuer/root-tls-cert-issuer
 
@@ -45,9 +44,6 @@ echo "Waiting for all components to be up"
 sleep 30
 
 #Build pekko-http server app docker images
-echo "    "
-echo "    "
-echo "Build docker image and put into minikube image repo"
 CURRENTDIR=${PWD}
 echo $CURRENTDIR
 
@@ -55,36 +51,24 @@ cd $PROTODIR/docker
 /bin/bash $PROTODIR/scripts/buildDockerImage.sh
 cd $CURRENTDIR
 
-echo "      "
-echo "      "
-echo "Creating papaya server secret"
+# Creating papaya server secret
 kubectl apply -f $PROTODIR/kube/papaya-auth.yaml -n papaya
 
-echo "      "
-echo "      "
-echo "Creating papaya server persistent volume claim"
+# Creating papaya server persistent volume claim
 kubectl apply -f $PROTODIR/kube/papaya-pvc.yaml -n papaya
 
-echo "      "
-echo "      "
-echo "Deploying root-tls-cert-issuer"
+# Deploying root-tls-cert-issuer
 kubectl -n papaya apply -f $PROTODIR/kube/root-tls-cert-issuer.yaml
 kubectl -n papaya wait --timeout=30s --for=condition=Ready issuer/root-tls-cert-issuer
 
-echo "      "
-echo "      "
-echo "Deploying tls_server-tls-cert-issuer"
+# Deploying tls_server-tls-cert-issuer
 kubectl -n papaya apply -f $PROTODIR/kube/papaya-tls-cert-issuer.yaml
 kubectl -n papaya wait --timeout=30s --for=condition=Ready issuer/papaya-tls-cert-issuer
 
-echo "      "
-echo "      "
-echo "Deploying tls_server deployment, service and ingress"
+# Deploying tls_server deployment, service and ingress
 kubectl apply -f $PROTODIR/kube/papaya.yaml -n papaya
 
-echo "      "
-echo "      "
-echo "Deploying passion deployment, service and ingress"
+# Deploying passion deployment, service and ingress
 kubectl apply -f $PROTODIR/kube/passionfruit.yaml -n passion
 
 ipAddr=$(minikube ip)
