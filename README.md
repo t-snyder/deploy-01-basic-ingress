@@ -1,4 +1,4 @@
-# Learn-01-Basic-Ingress Project
+# Deploy-01-Basic-Ingress Project
 ## Purpose
 The purpose of the prototype project is to demonstrate the configuration and use of ingress-nginx  within the minikube environment. The tests include http and https terminated at the ingress controller. Cert-manager is
 used to manage self-signed certificates for the TLS.
